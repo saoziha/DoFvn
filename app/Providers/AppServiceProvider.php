@@ -3,7 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-
+use Illuminate\Support\Facades\Schema;
+use View;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -23,6 +24,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Schema::defaultStringLength(190);
+        View::share('userUrl', getenv("USER_URL"));
+        View::share('adminUrl', getenv("ADMIN_URL"));
     }
 }

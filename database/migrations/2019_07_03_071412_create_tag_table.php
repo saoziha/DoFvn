@@ -14,7 +14,9 @@ class CreateTagTable extends Migration
     public function up()
     {
         Schema::create('tag', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id',10)->unsigned();
+            $table->string('name')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

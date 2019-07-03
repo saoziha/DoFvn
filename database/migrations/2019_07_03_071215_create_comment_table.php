@@ -14,12 +14,12 @@ class CreateCommentTable extends Migration
     public function up()
     {
         Schema::create('comment', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id',10)->unsigned();
             $table->integer('user_id');
-            $table->string('content');
+            $table->string('content')->nullable();
             $table->integer('post_id');
-            $table->integer('reply_id');
-            $table->string('reply');
+            $table->integer('reply_id')->nullable();
+            $table->string('reply')->nullable();
             $table->timestamps();
         });
     }

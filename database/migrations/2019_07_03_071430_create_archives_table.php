@@ -14,7 +14,10 @@ class CreateArchivesTable extends Migration
     public function up()
     {
         Schema::create('archives', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id',10)->unsigned();
+            $table->string('name',50)->nullable();
+            $table->integer('month')->nullable();
+            $table->integer('status')->nullable();
             $table->timestamps();
         });
     }

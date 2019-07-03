@@ -14,7 +14,10 @@ class CreateGalleryTable extends Migration
     public function up()
     {
         Schema::create('gallery', function (Blueprint $table) {
-            $table->bigIncrements('id');
+            $table->increments('id',10)->unsigned();
+            $table->string('link')->nullable();
+            $table->integer('status')->nullable();
+            $table->integer('create_by')->nullable();
             $table->timestamps();
         });
     }
