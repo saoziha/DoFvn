@@ -5,6 +5,9 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
+<script>
+    
+</script>
 <script src="{{$adminUrl}}/assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{$adminUrl}}/assets/plugins/bootstrap/js/tether.min.js"></script>

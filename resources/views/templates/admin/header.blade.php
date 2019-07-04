@@ -10,19 +10,22 @@
     <meta name="author" content="">
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{$adminUrl}}/assets/images/favicon.png">
-    <title>Monster Admin Template - The Most Complete & Trusted Bootstrap 4 Admin Template</title>
+    <title>DoFVN Admin</title>
     <!-- Bootstrap Core CSS -->
     <link href="{{$adminUrl}}/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- Custom CSS -->
     <link href="{{$adminUrl}}/css/style.css" rel="stylesheet">
     <!-- You can change the theme colors from here -->
     <link href="{{$adminUrl}}/css/colors/blue.css" id="theme" rel="stylesheet">
+    {{-- <link href="{{$adminUrl}}/fontawesome-free-5.9.0-web/css/all.css" rel="stylesheet">  --}}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
 <![endif]-->
+ <script src="js/sweetalert.min.js"></script>
 </head>
 
 <body class="fix-header fix-sidebar card-no-border">
@@ -51,14 +54,14 @@
                         <b>
                             <!--You can put here icon as well // <i class="wi wi-sunset"></i> //-->
                             <!-- Dark Logo icon -->
-                            <img src="../assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
+                            <img src="{{$adminUrl}}/assets/images/logo-icon.png" alt="homepage" class="dark-logo" />
 
                         </b>
                         <!--End Logo icon -->
                         <!-- Logo text -->
                         <span>
                             <!-- dark Logo text -->
-                            <img src="../assets/images/logo-text.png" alt="homepage" class="dark-logo" />
+                            <img src="{{$adminUrl}}/assets/images/logo-text.png" alt="homepage" class="dark-logo" />
                         </span>
                     </a>
                 </div>
@@ -83,7 +86,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="../assets/images/users/1.jpg" alt="user" class="profile-pic m-r-5" />Markarn Doe</a>
+                            <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{$adminUrl}}/assets/images/users/1.jpg" alt="user" class="profile-pic m-r-5" />Markarn Doe</a>
                         </li>
                     </ul>
                 </div>

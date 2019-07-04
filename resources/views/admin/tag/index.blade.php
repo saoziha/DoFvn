@@ -6,14 +6,14 @@
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">Posts</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">Tags</h3>
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="{{url('/admin')}}">Home</a></li>
-                    <li class="breadcrumb-item active">Posts</li>
+                <li class="breadcrumb-item"><a href="{{url('/admin')}}">Home</a></li>
+                    <li class="breadcrumb-item active">Tags</li>
                 </ol>
             </div>
             <div class="col-md-6 col-4 align-self-center">
-                <a href="{{url('/admin/posts/add')}}" class="btn pull-right hidden-sm-down btn-success"> Add</a>
+                <a href="{{url('/admin/tag/add')}}" class="btn pull-right hidden-sm-down btn-success"> Add</a>
             </div>
         </div>
 
@@ -29,8 +29,6 @@
                                     <tr>
                                         <th>#</th>
                                         <th>Name</th>
-                                        <th>Image</th>
-                                        <th>Create by</th>
                                         <th>Created at</th>
                                         <th>Updated at</th>
                                         <th>Status</th>
@@ -42,11 +40,9 @@
                                     <tr>
                                         <td>{{$stt}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td>{{$item->image}}</td>
-                                        <td>{{$item->create_by}}</td>
-                                        <td>{{$item->create_at}}</td>
-                                        <td>{{$item->update_at}}</td>
-                                        <th>Status</th>
+                                        <td>{{$item->created_at}}</td>
+                                        <td>{{$item->updated_at}}</td>
+                                        <th>{{$item->status}}</th>
                                         <td></td>
                                     </tr>
                                     <?php $stt++; } ?>
