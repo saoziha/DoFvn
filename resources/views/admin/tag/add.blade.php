@@ -3,10 +3,10 @@
     <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">Posts</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">Tag</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active">Posts</li>
+                    <li class="breadcrumb-item active">Tag</li>
                 </ol>
             </div>
             <div class="col-md-6 col-4 align-self-center">
@@ -38,7 +38,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Add</button>
-                                        <button type="button" class="btn btn-secondary">Back</button>
+                                        <a  href="{{url('admin/tag')}}" class="btn btn-secondary">Back</a>
                                     </div>
                                 </div>
                             </form>

@@ -11,7 +11,7 @@ class PostsController extends Controller
 {
     public function index(Request $request){
         try{
-      
+
             if(!isset($request->search)){
                 $request->search='';
             }
@@ -44,5 +44,5 @@ class PostsController extends Controller
             $this->error = $ex->getMessage();
         }
     }
-        
+
 }

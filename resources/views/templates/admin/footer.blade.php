@@ -5,9 +5,7 @@
 <!-- ============================================================== -->
 <!-- All Jquery -->
 <!-- ============================================================== -->
-<script>
-    
-</script>
+
 <script src="{{$adminUrl}}/assets/plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap tether Core JavaScript -->
 <script src="{{$adminUrl}}/assets/plugins/bootstrap/js/tether.min.js"></script>
@@ -33,6 +31,13 @@
 <!-- Style switcher -->
 <!-- ============================================================== -->
 <script src="{{$adminUrl}}/assets/plugins/styleswitcher/jQuery.style.switcher.js"></script>
+<script>
+    $(document).ready(function(){
+        setTimeout(function(){
+            $('.alert').fadeOut();
+        },3000);
+    })
+    </script>
 </body>
 
 </html>

@@ -21,7 +21,7 @@ Route::pattern('slug','(.*)');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-// Route::group(['middleware' => 'auth:admin-web'], function () {
+Route::group(['middleware' => 'auth:admin'], function () {
     Route::group(['prefix' => 'admin','namespace'=>'Admin'], function () {
         Route::get('/','PostsController@index')->name('admin.index');
         Route::group(['prefix' => 'posts'], function () {
@@ -32,7 +32,11 @@ Route::get('/home', 'HomeController@index')->name('home');
             Route::get('/','TagController@index')->name('admin.tag.index');
             Route::get('add','TagController@getAdd')->name('admin.tag.index');
             Route::post('doAdd','TagController@doAdd');
-            Route::get('{id}/edit','TagController@getEdit')->name('admin.tag.index');
+            Route::post('{id}/edit','TagController@edit')->name('admin.tag.index');
+            Route::post('{id}/delete','TagController@delete')->name('admin.tag.index');
         });
+        Route::get('{id}/logout','AdminController@logout');
     });
-// });
+});
+Route::get('admin/login','Admin\AdminController@login');
+Route::post('admin/doLogin','Admin\AdminController@doLogin');

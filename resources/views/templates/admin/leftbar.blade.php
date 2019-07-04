@@ -36,7 +36,7 @@
                 </li>
             </ul>
             <div class="text-center m-t-30">
-                <a href="https://wrappixel.com/templates/monsteradmin/" class="btn btn-danger">Logout</a>
+                <a href="{{url('admin/').'/'.Auth::guard('admin')->user()->id.'/logout'}}" class="btn btn-danger">Logout</a>
             </div>
         </nav>
         <!-- End Sidebar navigation -->

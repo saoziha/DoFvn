@@ -16,7 +16,7 @@ class Authenticate
      public function handle($request, Closure $next, $guard = null)
      {
          if(Auth::guard($guard)->guest()){
-            return redirect('noaccept');
+            return redirect($guard.'/login');
          }
          return $next($request);
      }

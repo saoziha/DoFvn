@@ -21,4 +21,14 @@ class Tag extends Model
         $input['status']=1;
         return Self::create($input)->id;
     }
+
+    public static function edit($input,$id){
+        unset($input['_token']);
+        return Self::where('id',$id)->update($input);
+    }
+
+    public static function remove($id){
+        return Self::where('id',$id)->delete();
+    }
+
 }
