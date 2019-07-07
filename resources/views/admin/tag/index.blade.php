@@ -45,15 +45,15 @@
 
                         <h4 class="card-title">List</h4>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="myTable" class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Created at</th>
-                                        <th>Updated at</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="no-sort">#</th>
+                                        <th class="no-sort">Name</th>
+                                        <th class="no-sort">Created at</th>
+                                        <th class="no-sort">Updated at</th>
+                                        <th class="no-sort">Status</th>
+                                        <th class="no-sort">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,7 +85,7 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            <h4 class="modal-title">Modal Header</h4>
+                                                            <h4 class="modal-title">Edit {{$item->name}}</h4>
                                                         </div>
                                                         <div class="modal-body">
                                                         <form class='form-horizontal form-material' action='{{url("admin/tag")."/".$item->id."/edit"}}' method="POST">

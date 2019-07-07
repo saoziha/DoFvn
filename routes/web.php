@@ -21,13 +21,17 @@ Route::pattern('slug','(.*)');
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+//ADMIN
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::group(['prefix' => 'admin','namespace'=>'Admin'], function () {
         Route::get('/','PostsController@index')->name('admin.index');
+        //POST
         Route::group(['prefix' => 'posts'], function () {
             Route::get('/','PostsController@index')->name('admin.post.index');
             Route::get('add','PostsController@getAdd')->name('admin.post.index');
+            Route::post('doAdd','PostsController@doAdd');
         });
+        //TAG
         Route::group(['prefix' => 'tag'], function () {
             Route::get('/','TagController@index')->name('admin.tag.index');
             Route::get('add','TagController@getAdd')->name('admin.tag.index');
@@ -35,8 +39,57 @@ Route::group(['middleware' => 'auth:admin'], function () {
             Route::post('{id}/edit','TagController@edit')->name('admin.tag.index');
             Route::post('{id}/delete','TagController@delete')->name('admin.tag.index');
         });
+        //CATEGORY
+        Route::group(['prefix' => 'category'], function () {
+            Route::get('/','CategoryController@index')->name('admin.category.index');
+            Route::get('add','CategoryController@getAdd')->name('admin.category.index');
+            Route::post('doAdd','CategoryController@doAdd');
+            Route::post('{id}/edit','CategoryController@edit')->name('admin.category.index');
+            Route::post('{id}/delete','CategoryController@delete')->name('admin.category.index');
+        });
+        //ARCHIVES
+        Route::group(['prefix' => 'archives'], function () {
+            Route::get('/','ArchivesController@index')->name('admin.archives.index');
+            Route::post('{id}/edit','ArchivesController@edit')->name('admin.archives.index');
+        });
+        //COMMENT
+        Route::group(['prefix' => 'comment'], function () {
+            Route::get('/','CommentController@index')->name('admin.comment.index');
+            Route::post('{id}/edit','CommentController@edit')->name('admin.comment.index');
+            Route::post('{id}/delete','CommentController@delete')->name('admin.comment.index');
+        });
+        //USER
+        Route::group(['prefix' => 'user'], function () {
+            Route::get('/','UserController@index')->name('admin.user.index');
+            Route::get('add','UserController@getAdd')->name('admin.user.index');
+            Route::post('doAdd','UserController@doAdd');
+            Route::post('{id}/edit','UserController@edit')->name('admin.user.index');
+            Route::post('{id}/editStatus','UserController@editStatus')->name('admin.user.index');
+            Route::post('{id}/delete','UserController@delete')->name('admin.user.index');
+        });
+        //GALLERY
+        Route::group(['prefix' => 'gallery'], function () {
+            Route::get('/','GalleryController@index')->name('admin.gallery.index');
+            Route::get('add','GalleryController@getAdd')->name('admin.gallery.index');
+            Route::post('doAdd','GalleryController@doAdd');
+            Route::post('{id}/edit','GalleryController@edit')->name('admin.gallery.index');
+            Route::post('{id}/delete','GalleryController@delete')->name('admin.gallery.index');
+        });
+        //IMAGE
+        Route::group(['prefix' => 'image'], function () {
+            Route::get('{id}/list','ImageController@index')->name('admin.gallery.index');
+            Route::get('{id}/add','ImageController@getAdd')->name('admin.gallery.index');
+            Route::post('{id}/doAdd','ImageController@doAdd');
+            Route::post('{id}/edit','ImageController@edit')->name('admin.gallery.index');
+            Route::post('{id}/delete','ImageController@delete')->name('admin.gallery.index');
+        });
         Route::get('{id}/logout','AdminController@logout');
     });
 });
+
+//AUTH
 Route::get('admin/login','Admin\AdminController@login');
 Route::post('admin/doLogin','Admin\AdminController@doLogin');
+
+Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
+    ->name('ckfinder_examples');

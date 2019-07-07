@@ -24,17 +24,16 @@
                     <div class="card-block">
                         <h4 class="card-title">List</h4>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table id="myTable" class="table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
-                                        <th>Name</th>
-                                        <th>Image</th>
-                                        <th>Create by</th>
-                                        <th>Created at</th>
-                                        <th>Updated at</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
+                                        <th class="no-sort">#</th>
+                                        <th class="no-sort">Name</th>
+                                        <th class="no-sort" width="600px">Title</th>
+                                        <th class="no-sort">Created at</th>
+                                        <th class="no-sort">Updated at</th>
+                                        <th class="no-sort">Status</th>
+                                        <th class="no-sort">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -42,12 +41,47 @@
                                     <tr>
                                         <td>{{$stt}}</td>
                                         <td>{{$item->name}}</td>
-                                        <td>{{$item->image}}</td>
-                                        <td>{{$item->create_by}}</td>
-                                        <td>{{$item->create_at}}</td>
-                                        <td>{{$item->update_at}}</td>
-                                        <th>Status</th>
-                                        <td></td>
+                                        <td>{{$item->title}}</td>
+                                        <td>{{$item->created_at}}</td>
+                                        <td>{{$item->updated_at}}</td>
+                                        <td>
+                                            <form action='{{url("admin/posts")."/".$item->id."/edit"}}' method="POST">
+                                                {!! csrf_field() !!}
+                                            @if($item->status==1)
+                                                <input value="0" name='status' type="hidden"/>
+                                                <button type="submit" class="btn btn-success">Enabled</button>
+                                            @else
+                                                <input value="1" name='status' type="hidden"/>
+                                                <button type="submit" class="btn btn-danger">Disabled</button>
+                                            @endif
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <a href="{{url("admin/posts/$item->id/edit")}}" class="btn btn-success">Edit</a>
+                                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delModal{{$item->id}}">Delete</button>
+                                                <!-- Modal -->
+                                            <div id="delModal{{$item->id}}" class="modal fade" role="dialog">
+                                                <div class="modal-dialog">
+                                                    <!-- Modal content-->
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                            <h4 class="modal-title">Delete category</h4>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <h2>Do you want do this category?</h2>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <form class='form-horizontal form-material' action='{{url("admin/category")."/".$item->id."/delete"}}' method="POST">
+                                                                {!! csrf_field() !!}
+                                                                <button type="submit" id="delete_{{$item->id}}" class="btn btn-success">Yes</button>
+                                                            </form>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                     </tr>
                                     <?php $stt++; } ?>
                                 </tbody>
