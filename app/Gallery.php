@@ -19,7 +19,9 @@ class Gallery extends Model
     public static function getAllToPost(){
         return Self::where('status',1)->get();
     }
-
+    public static function getItems(){
+        return Self::join('category','gallery.category_id','=','category.id')->select(DB::raw('gallery.*,category.name as category_name'))->where('gallery.status',1)->get();
+    }
     public static function add($input){
         $input['status']=1;
         return Self::create($input)->id;

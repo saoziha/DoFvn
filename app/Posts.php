@@ -3,21 +3,34 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Posts extends Model
 {
     protected $table='posts';
     protected $fillable=['name','title','image','content','comments','create_by','tags','status','top','category_id'];
 
-    public static function getAll($search,$page_limit=10,$page=1){
-        return Self::whereRaw("name like '%$search%' or title like '%$search%' or content like '%$search%'")->paginate($page_limit);
+    public static function getAll($input,$search='',$page_limit=1,$page=1){
+        $posts = Posts::join('category','posts.category_id','=','category.id');
+        $posts->whereRaw("(posts.name like '%$search%' or posts.title like '%$search%' or posts.content like '%$search%') and posts.status = 1");
+        if(isset($input['category'])&& !empty($input['category'])){
+            $posts->where('posts.category_id',$input['category']);
+        }
+        if(isset($input['archives'])&& !empty($input['archives'])){
+            $posts->whereRaw("MONTH(posts.created_at)= {$input['archives']}");
+        }
+        if(isset($input['tag'])&& !empty($input['tag'])){
+            $posts->whereRaw("POSITION({$input['tag']} IN posts.tag)>-1");
+        }
+
+        return $posts->select(DB::raw('posts.*,category.name AS category_name'))->paginate($page_limit);
     }
 
     public static function getItems(){
         return Self::orderBy('id','desc')->get();
     }
     public static function getItemById($id){
-        return Self::where('id',$id)->first();
+        return Self::join('category','posts.category_id','=','category.id')->select(DB::raw('posts.*,category.name AS category_name'))->where('posts.id',$id)->first();
     }
 
     public static function edit($input,$id){

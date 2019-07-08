@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Category extends Model
 {
@@ -17,7 +18,7 @@ class Category extends Model
         return Self::where('status',1)->orderBy('name')->get();
     }
     public static function getAllToPost(){
-        return Self::where('status',1)->get();
+        return DB::select('SELECT category.*,(SELECT COUNT(*) from posts WHERE posts.category_id=category.id) AS sum FROM `category` WHERE status = 1');
     }
 
     public static function add($input){

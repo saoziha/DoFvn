@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use DB;
 class Archives extends Model
 {
     protected $table='archives';
@@ -16,7 +16,7 @@ class Archives extends Model
     }
 
     public static function getAllToPost(){
-        return Self::where('status',1)->get();
+        return DB::select('SELECT archives.*,(SELECT COUNT(*) from posts WHERE MONTH(posts.created_at)= archives.month ) AS sum FROM `archives` WHERE status = 1');
     }
 
     public static function edit($input,$id){

@@ -11,14 +11,14 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
 Route::pattern('id','[0-9]*');
 Route::pattern('slug','(.*)');
 
+Route::get('/','GalleryController@home')->name('home.index');
+Route::get('/gallery','GalleryController@index')->name('gallery.index');
+Route::get('/blog','PostsController@index')->name('posts.index');
+Route::get('/{slug}-{id}.html','PostsController@detail')->name('posts.index');
 Route::get('/home', 'HomeController@index')->name('home');
 
 //ADMIN
@@ -93,3 +93,4 @@ Route::post('admin/doLogin','Admin\AdminController@doLogin');
 
 Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
     ->name('ckfinder_examples');
+

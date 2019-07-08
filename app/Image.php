@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use DB;
 
 class Image extends Model
 {
@@ -16,6 +17,10 @@ class Image extends Model
     public static function add($input){
         $input['status']=1;
         return Self::create($input)->id;
+    }
+
+    public static function getItems(){
+        return Self::join('gallery','image.gallery_id','=','gallery.id')->join('category','gallery.category_id','=','category.id')->select(DB::raw('gallery.*,category.name as category_name,image.link'))->where('gallery.status',1)->get();
     }
 
     public static function edit($input,$id){
