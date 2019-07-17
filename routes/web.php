@@ -30,6 +30,10 @@ Route::group(['middleware' => 'auth:admin'], function () {
             Route::get('/','PostsController@index')->name('admin.post.index');
             Route::get('add','PostsController@getAdd')->name('admin.post.index');
             Route::post('doAdd','PostsController@doAdd');
+            Route::get('{id}/edit','PostsController@edit')->name('admin.post.index');
+            Route::post('{id}/doEdit','PostsController@doEdit');
+            Route::post('{id}/delete','PostsController@delete');
+            Route::post('{id}/status','PostsController@status');
         });
         //TAG
         Route::group(['prefix' => 'tag'], function () {
@@ -57,6 +61,13 @@ Route::group(['middleware' => 'auth:admin'], function () {
             Route::get('/','CommentController@index')->name('admin.comment.index');
             Route::post('{id}/edit','CommentController@edit')->name('admin.comment.index');
             Route::post('{id}/delete','CommentController@delete')->name('admin.comment.index');
+        });
+        //CONTACT
+        Route::group(['prefix' => 'contact'], function () {
+            Route::get('{status}','ContactController@index')->name('admin.contact.index');
+            Route::post('{id}/edit','ContactController@edit')->name('admin.contact.index');
+            Route::post('{id}/send','ContactController@send')->name('admin.contact.index');
+            Route::post('{id}/delete','ContactController@delete')->name('admin.contact.index');
         });
         //USER
         Route::group(['prefix' => 'user'], function () {
@@ -93,4 +104,30 @@ Route::post('admin/doLogin','Admin\AdminController@doLogin');
 
 Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\CKFinderController@examplesAction')
     ->name('ckfinder_examples');
+//USER
+Route::get("user/login",'UserController@login');
+Route::post("user/doLogin",'UserController@doLogin');
+Route::group(['middleware' => 'auth:user'], function () {
+    Route::group(['prefix' => 'user'], function () {
+        Route::get('comment','UserController@comment');
+    });
+});
+Route::get('contact','ContactController@index')->name('contact.index');
+Route::post('contact/send','ContactController@send');
+Route::group(['middleware' => 'auth:user'], function () {
+    Route::group(['prefix' => 'user'], function () {
+        //POST
+        Route::group(['prefix' => 'posts'], function () {
+            Route::get('/','PostsController@list')->name('user.post.index');
+            Route::get('add','PostsController@getAdd')->name('user.post.index');
+            Route::post('doAdd','PostsController@doAdd');
+            Route::get('{id}/edit','PostsController@edit')->name('user.post.index');
+            Route::post('{id}/doEdit','PostsController@doEdit');
+            Route::post('{id}/delete','PostsController@delete');
+            Route::post('{id}/status','PostsController@status');
+        });
+        Route::get('{id}/logout','UserController@logout');
+        Route::get('remove-comment','UserController@removeComment');
+    });
+});
 

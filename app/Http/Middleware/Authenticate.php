@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
-
+use Request;
 class Authenticate
 {
     /**
@@ -16,7 +16,16 @@ class Authenticate
      public function handle($request, Closure $next, $guard = null)
      {
          if(Auth::guard($guard)->guest()){
-            return redirect($guard.'/login');
+            if($guard=='user'){
+                if(strstr(Request::getRequestUri(),'comment')){
+                    if ($request->ajax()) {
+                        return response('Unauthorized.', 401);
+                    }
+                }
+                return redirect($guard.'/login');;
+            }else{
+                return redirect($guard.'/login');
+            }
          }
          return $next($request);
      }

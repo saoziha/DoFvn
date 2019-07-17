@@ -7,7 +7,10 @@ use Illuminate\Support\Facades\Schema;
 use View;
 use App\Category;
 use App\Archives;
-
+use App\Tag;
+use App\Posts;
+use Auth;
+use App\User;
 class AppServiceProvider extends ServiceProvider
 {
     /**
@@ -33,5 +36,22 @@ class AppServiceProvider extends ServiceProvider
         // dd(Category::getAllToPost());
         View::share('categories',Category::getAllToPost());
         View::share('archives',Archives::getAllToPost());
+        View::share("tags",Tag::getAllToPost());
+        View::share("popular",Posts::getItemsPopular());
+
+         //compose all the views....
+        view()->composer('*', function ($view)
+        {
+            if(Auth::guard('user')->check()){
+                $id = Auth::guard('user')->user()->id;
+                $user = User::getItemById($id);
+            }else{
+                $user = (object)['id'=>null];
+            }
+
+            //...with this variable
+            $view->with('userLogin', $user );
+        });
+
     }
 }

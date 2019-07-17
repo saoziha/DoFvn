@@ -18,7 +18,7 @@ class Category extends Model
         return Self::where('status',1)->orderBy('name')->get();
     }
     public static function getAllToPost(){
-        return DB::select('SELECT category.*,(SELECT COUNT(*) from posts WHERE posts.category_id=category.id) AS sum FROM `category` WHERE status = 1');
+        return DB::select('SELECT category.*,(SELECT COUNT(*) from posts WHERE posts.category_id=category.id and posts.status=1) AS sum FROM `category` WHERE status = 1');
     }
 
     public static function add($input){

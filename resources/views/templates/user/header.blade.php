@@ -40,8 +40,13 @@
 					<li class="<?= Route::current()->getName() == 'home.index'?'site-active':''?>"><a href="/">Home</a></li>
 					<li class="<?= Route::current()->getName() == 'gallery.index'?'site-active':''?>"><a href="/"><a href="/gallery">Gallery</a></li>
 					<li class="<?= Route::current()->getName() == 'posts.index'?'site-active':''?>"><a href="/blog">Blog</a></li>
-					<li><a href="/contact">Contact</a></li>
-					<li><a href="/login">Log In</a></li>
+					<li class="<?= Route::current()->getName() == 'contact.index'?'site-active':''?>"><a href="/contact">Contact</a></li>
+                    @if($userLogin->id!=null)
+                    <li> <a href="/user/posts">Posts </a></li>
+                    <li> <a href="/user/logout">Logout </a></li>
+                    @else
+                    <li><a href="/user/login">Log In</a></li>
+                    @endif
 				</ul>
 			</nav>
 

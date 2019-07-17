@@ -18,10 +18,10 @@
                 {!!$item->content!!}
             <div class="tag-widget post-tag-container mb-5 mt-5">
               <div class="tagcloud">
-                <a href="#" class="tag-cloud-link">Life</a>
-                <a href="#" class="tag-cloud-link">Sport</a>
-                <a href="#" class="tag-cloud-link">Tech</a>
-                <a href="#" class="tag-cloud-link">Travel</a>
+                  <?php foreach ($tags as $key => $value) {
+                   ?>
+                <a href="{{url("blog?tag=$value->id")}}" class="tag-cloud-link">{{$value->name}}</a>
+                <?php } ?>
               </div>
             </div>
 
@@ -35,117 +35,65 @@
               </div>
             </div>
 
-
             <div class="pt-5 mt-5">
-              <h3 class="mb-5 font-weight-bold">6 Comments</h3>
-              <ul class="comment-list">
-                <li class="comment">
+            <h3 class="mb-5 font-weight-bold" id="total_comment" data-total='{{$item->comments}}'>{{$item->comments}} Comments</h3>
+              <ul class="comment-list" id="comment_list">
+                <?php foreach($comments as $comment){
+                    if($comment->reply_id==0){
+                ?>
+                <li class="comment" id="li{{$comment->id}}">
                   <div class="vcard bio">
-                    <img src="images/person_1.jpg" alt="Image placeholder">
+                        <?php
+                        $avatar = $comment->avatar!=''?$comment->avatar:'other.png';
+                        ?>
+                    <img src="{{url('storage').'/'.$avatar}}" alt="Image placeholder">
                   </div>
                   <div class="comment-body">
-                    <h3>John Doe</h3>
-                    <div class="meta">October 03, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply">Reply</a></p>
-                  </div>
-                </li>
-
-                <li class="comment">
-                  <div class="vcard bio">
-                    <img src="images/person_1.jpg" alt="Image placeholder">
-                  </div>
-                  <div class="comment-body">
-                    <h3>John Doe</h3>
-                    <div class="meta">October 03, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply">Reply</a></p>
+                    <h3>{{$comment->user_name}}</h3>
+                    <div class="meta">{{$comment->created_at}}</div>
+                        <p>{{$comment->content}}</p>
+                        <p style="display:inline"><a href="javascript:void(0)" onclick="parrentComment({{$comment->id}},'{{url('user/comment')}}',{{$item->id}})" class="reply">Reply</a></p>
+                        @if($userLogin->id==$comment->user_id)
+                        <p style="display:inline"><a href="javascript:void(0)" onclick="removeComment({{$comment->id}},'{{url('user/remove-comment')}}')" class="reply">Delete</a></p>
+                        @endif
                   </div>
 
-                  <ul class="children">
-                    <li class="comment">
+                    <ul class="children" id="pr_{{$comment->id}}">
+                    <?php foreach($comments as $child){
+                        if($child->reply_id!=0 && $child->reply_id==$comment->id){
+                    ?>
+                    <li class="comment" id="li{{$child->id}}">
                       <div class="vcard bio">
-                        <img src="images/person_1.jpg" alt="Image placeholder">
+                        <img src="{{url('storage').'/'.$avatar}}" alt="Image placeholder">
                       </div>
                       <div class="comment-body">
-                        <h3>John Doe</h3>
-                        <div class="meta">October 03, 2018 at 2:21pm</div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                        <p><a href="#" class="reply">Reply</a></p>
+                        <h3>{{$child->user_name}}</h3>
+                        <div class="meta">{{$child->created_at}}</div>
+                            <p>{{$child->content}}</p>
+                            @if($userLogin->id==$child->user_id)
+                            <p style="display:inline"><a href="javascript:void(0)" onclick="removeComment({{$child->id}},'{{url('user/remove-comment')}}')" class="reply">Delete</a></p>
+                            @endif
                       </div>
-
-
-                      <ul class="children">
-                        <li class="comment">
-                          <div class="vcard bio">
-                            <img src="images/person_1.jpg" alt="Image placeholder">
-                          </div>
-                          <div class="comment-body">
-                            <h3>John Doe</h3>
-                            <div class="meta">October 03, 2018 at 2:21pm</div>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                            <p><a href="#" class="reply">Reply</a></p>
-                          </div>
-
-                            <ul class="children">
-                              <li class="comment">
-                                <div class="vcard bio">
-                                  <img src="images/person_1.jpg" alt="Image placeholder">
-                                </div>
-                                <div class="comment-body">
-                                  <h3>John Doe</h3>
-                                  <div class="meta">October 03, 2018 at 2:21pm</div>
-                                  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                                  <p><a href="#" class="reply">Reply</a></p>
-                                </div>
-                              </li>
-                            </ul>
-                        </li>
-                      </ul>
                     </li>
+                    <?php }} ?>
                   </ul>
                 </li>
-
-                <li class="comment">
-                  <div class="vcard bio">
-                    <img src="images/person_1.jpg" alt="Image placeholder">
-                  </div>
-                  <div class="comment-body">
-                    <h3>John Doe</h3>
-                    <div class="meta">October 03, 2018 at 2:21pm</div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Pariatur quidem laborum necessitatibus, ipsam impedit vitae autem, eum officia, fugiat saepe enim sapiente iste iure! Quam voluptas earum impedit necessitatibus, nihil?</p>
-                    <p><a href="#" class="reply">Reply</a></p>
-                  </div>
-                </li>
+                <?php }}?>
               </ul>
               <!-- END comment-list -->
-
               <div class="comment-form-wrap pt-5">
-                <h3 class="mb-5">Leave a comment</h3>
-                <form action="#" class="p-3 p-md-5 bg-light">
-                  <div class="form-group">
-                    <label for="name">Name *</label>
-                    <input type="text" class="form-control" id="name">
-                  </div>
-                  <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" class="form-control" id="email">
-                  </div>
-                  <div class="form-group">
-                    <label for="website">Website</label>
-                    <input type="url" class="form-control" id="website">
-                  </div>
+	                <h3 class="mb-5">Leave a comment</h3>
+	                <form action="#" class="p-3 p-md-5 bg-light">
+	                  <div class="form-group">
+	                    <label for="message">Message</label>
+                      <textarea name="" id="message" cols="30" id="message" data-url="{{url('user/comment')}}" data-id="{{$item->id}}" rows="10" class="form-control"></textarea>
+	                  </div>
+	                  <div class="form-group">
+	                    <input type="button" onclick="comment()" value="Post Comment" class="btn py-3 px-4 btn-primary">
+	                  </div>
 
-                  <div class="form-group">
-                    <label for="message">Message</label>
-                    <textarea name="" id="message" cols="30" rows="10" class="form-control"></textarea>
-                  </div>
-                  <div class="form-group">
-                    <input type="submit" value="Post Comment" class="btn py-3 px-4 btn-primary">
-                  </div>
-
-                </form>
-              </div>
+	                </form>
+	              </div>
             </div>
           </div> <!-- .col-md-8 -->
                 @include('templates.user.right-bar')

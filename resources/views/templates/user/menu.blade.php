@@ -7,7 +7,7 @@
                         <ul class="list-unstyled categories">
                             <?php foreach ($categories as $key => $value) {
                              ?>
-                            <li><a href="#">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
+                            <li><a href="/blog?category={{$value->id}}">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
                             <?php }?>
                         </ul>
                     </div>
@@ -18,7 +18,7 @@
                         <ul class="list-unstyled categories">
                                 <?php foreach ($archives as $key => $value) {
                                     ?>
-                                   <li><a href="#">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
+                                   <li><a href="/blog?archives={{$value->month}}">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
                                    <?php }?>
                         </ul>
                     </div>

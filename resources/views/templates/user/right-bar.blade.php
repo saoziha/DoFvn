@@ -1,9 +1,9 @@
 <div class="col-lg-4 sidebar ftco-animate bg-light fadeInUp ftco-animated">
         <div class="sidebar-box">
-            <form action="#" class="search-form">
+            <form action="/blog" method="GET" class="search-form">
                 <div class="form-group">
                     <span class="icon icon-search"></span>
-                    <input type="text" class="form-control" placeholder="Type a keyword and hit enter">
+                    <input type="text" name="search" class="form-control" placeholder="Type a keyword and hit enter">
                 </div>
             </form>
         </div>
@@ -12,38 +12,35 @@
             <ul class="categories">
                 <?php foreach ($categories as $key => $value) {
                     ?>
-                <li><a href="#">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
+                <li><a href="{{url("blog?category=$value->id")}}">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
                 <?php }?>
             </ul>
         </div>
 
         <div class="sidebar-box ftco-animate fadeInUp ftco-animated">
             <h3 class="sidebar-heading">Popular Articles</h3>
+            <?php foreach($popular as $item) { ?>
             <div class="block-21 mb-4 d-flex">
-                <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
+                    <a href="/{{Str::slug($item->name).'-'.$item->id.'.html'}}" class="blog-img mr-4" style="background-image: url({{url('storage').'/'.$item->image}});"></a>
                 <div class="text">
-                    <h3 class="heading"><a href="#">Even the all-powerful Pointing has no
-                            control</a></h3>
+                <h3 class="heading"><a href="/{{Str::slug($item->name).'-'.$item->id.'.html'}}">{{$item->name}}</a></h3>
                     <div class="meta">
-                        <div><a href="#"><span class="icon-calendar"></span> Oct. 04, 2019</a></div>
-                        <div><a href="#"><span class="icon-person"></span> Dave Lewis</a></div>
-                        <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                        <div><a href="/{{Str::slug($item->name).'-'.$item->id.'.html'}}"><span class="icon-calendar"></span> {{ date("d-m-Y", strtotime($item->created_at)) }}</a></div>
+                        <div><a href="/{{Str::slug($item->name).'-'.$item->id.'.html'}}"><span class="icon-person"></span> {{$item->create_by}}</a></div>
+                        <div><a href="/{{Str::slug($item->name).'-'.$item->id.'.html'}}"><span class="icon-chat"></span> {{$item->comments}}</a></div>
                     </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
 
         <div class="sidebar-box ftco-animate">
             <h3 class="sidebar-heading">Tag Cloud</h3>
             <ul class="tagcloud">
-                <a href="#" class="tag-cloud-link">animals</a>
-                <a href="#" class="tag-cloud-link">human</a>
-                <a href="#" class="tag-cloud-link">people</a>
-                <a href="#" class="tag-cloud-link">cat</a>
-                <a href="#" class="tag-cloud-link">dog</a>
-                <a href="#" class="tag-cloud-link">nature</a>
-                <a href="#" class="tag-cloud-link">leaves</a>
-                <a href="#" class="tag-cloud-link">food</a>
+                    <?php foreach ($tags as $key => $value) {
+                        ?>
+                     <a href="{{url("blog?tag=$value->id")}}" class="tag-cloud-link">{{$value->name}}</a>
+                     <?php } ?>
             </ul>
         </div>
 
@@ -64,7 +61,7 @@
             <h3 class="sidebar-heading">Archives</h3>
             <ul class="categories">
                 <?php foreach ($archives as $key => $value) {?>
-                    <li><a href="#">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
+                <li><a href="/blog?archives={{$value->month}}">{{ucfirst($value->name)}} <span>({{$value->sum}})</span></a></li>
                 <?php }?>
             </ul>
         </div>

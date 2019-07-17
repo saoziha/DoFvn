@@ -16,7 +16,7 @@ class Archives extends Model
     }
 
     public static function getAllToPost(){
-        return DB::select('SELECT archives.*,(SELECT COUNT(*) from posts WHERE MONTH(posts.created_at)= archives.month ) AS sum FROM `archives` WHERE status = 1');
+        return DB::select('SELECT archives.*,(SELECT COUNT(*) from posts WHERE MONTH(posts.created_at)= archives.month and posts.status=1 ) AS sum FROM `archives` WHERE status = 1');
     }
 
     public static function edit($input,$id){
