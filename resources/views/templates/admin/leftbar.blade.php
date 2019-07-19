@@ -23,10 +23,7 @@
                     <a href="{{url('/admin/about')}}" class="waves-effect"><i class="fa fa-address-card m-r-10" aria-hidden="true"></i>About</a>
                 </li>
                 <li class="<?= Route::current()->getName() == 'admin.contact.index'?'active':''?>">
-                    <a href="{{url('/admin/contact')}}" class="waves-effect"><i class="fa fa-envelope-open m-r-10" aria-hidden="true"></i>Contact</a>
-                </li>
-                <li class="<?= Route::current()->getName() == 'admin.subcribe.index'?'active':''?>">
-                    <a href="{{url('/admin/subcribe')}}" class="waves-effect"><i class="fa fa-phone-square m-r-10" aria-hidden="true"></i>Subcribe</a>
+                    <a href="{{url('/admin/contact/0')}}" class="waves-effect"><i class="fa fa-envelope-open m-r-10" aria-hidden="true"></i>Contact</a>
                 </li>
                 <li class="<?= Route::current()->getName() == 'admin.comment.index'?'active':''?>">
                     <a href="{{url('/admin/comment')}}" class="waves-effect"><i class="fa fa-comment m-r-10" aria-hidden="true"></i>Comment</a>
