@@ -34,7 +34,7 @@ class Posts extends Model
     }
 
     public static function getItems(){
-        return Self::where('status',1)->orderBy('id','desc')->get();
+        return Self::orderBy('id','desc')->get();
     }
 
     public static function getItemsByUser($id){
@@ -42,7 +42,7 @@ class Posts extends Model
     }
 
     public static function getItemById($id){
-        return Self::join('category','posts.category_id','=','category.id')->select(DB::raw('posts.*,category.name AS category_name'))->where('posts.id',$id)->where('posts.status',1)->first();
+        return Self::join('category','posts.category_id','=','category.id')->select(DB::raw('posts.*,category.name AS category_name'))->where('posts.id',$id)->first();
     }
 
     public static function edit($input,$id){
