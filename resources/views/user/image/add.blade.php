@@ -1,12 +1,12 @@
-@extends('templates.admin.master')
+@extends('templates.posts.master')
 @section('content')
     <div class="container-fluid">
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">Tag</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">Image</h3>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Home</a></li>
-                    <li class="breadcrumb-item active">Tag</li>
+                    <li class="breadcrumb-item active">Image</li>
                 </ol>
             </div>
         </div>
@@ -24,18 +24,25 @@
                                         </ul>
                                     </div>
                                 @endif
-                            <form class="form-horizontal form-material" action="{{url('admin/tag/doAdd')}}" method="POST">
+                            <form class="form-horizontal form-material" enctype="multipart/form-data" action="{{url('user/image/'.$id.'/doAdd')}}" method="POST">
                                 {!! csrf_field() !!}
                                 <div class="form-group">
-                                    <label class="col-md-12">Name</label>
+                                    <label class="col-md-12">Image</label>
                                     <div class="col-md-12">
-                                        <input type="text" name="name" placeholder="Tag name" class="form-control form-control-line">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <input type="file"  onchange="loadFile(event)" name="image" placeholder="image" class="form-control form-control-line">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <img id="output" width="100px" height="100px" class="img-fluid"/>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Add</button>
-                                        <a  href="{{url('admin/tag')}}" class="btn btn-secondary">Back</a>
+                                        <a  href="{{url('user/gallery')}}" class="btn btn-secondary">Back</a>
                                     </div>
                                 </div>
                             </form>

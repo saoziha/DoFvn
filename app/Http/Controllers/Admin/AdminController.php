@@ -6,6 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Auth;
 use Validator;
+use App\Admin;
+use App\Services\Upload\UploadService;
+
 class AdminController extends Controller
 {
     public function login(){
@@ -51,6 +54,53 @@ class AdminController extends Controller
             $admin->save();
             Auth::guard('admin')->logout();
             return redirect('admin/login');
+        }
+    }
+
+    public function profile(){
+        $admin_id = Auth::guard('admin')->user()->id;
+        $item = Admin::getItemById($admin_id);
+        return view('admin.profile',compact('item'));
+    }
+
+    public function changeProfile(Request $request){
+        $validator = Validator::make([
+            'name'=>$request->name
+        ],[
+            'name'=>'required|min:10'
+        ]);
+        if($validator->fails()){
+            return redirect('admin/profile')
+            ->withErrors($validator)
+            ->withInput();
+        }else{
+            $admin_id = Auth::guard('admin')->user()->id;
+            if($request->hasFile('avatar')){
+                $filename='';
+                $filename = UploadService::upload('admin',$request->avatar);
+                $userinfo = Admin::getItemById($admin_id);
+                if($userinfo->avatar!='user.png'){
+                    UploadService::deleteFile($userinfo->avatar);
+                }
+                $input = [
+                    'name'=>$request->name,
+                    'avatar'=>$filename
+                ];
+            }else{
+                $input = [
+                    'name'=>$request->name
+                ];
+            }
+            if($request->password != ''){
+                $input['password']=bcrypt($request->password);
+            }
+            if(Admin::edit($input,$admin_id)){
+                $request->session()->flash('msg','completed to edit');
+                return redirect('admin/profile');
+            }else{
+                $request->session()->flash('msg','fail to edit');
+                return redirect('admin/profile');
+            }
         }
     }
 }

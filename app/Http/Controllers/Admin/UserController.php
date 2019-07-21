@@ -91,7 +91,7 @@ class UserController extends Controller
                 ];
             }
             if($request->password != ''){
-                $input['password']=$request->password;
+                $input['password']=bcrypt($request->password);
             }
             if(User::edit($input,$id)){
                 $request->session()->flash('msg','completed to edit');

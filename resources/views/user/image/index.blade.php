@@ -1,4 +1,4 @@
-@extends('templates.admin.master')
+@extends('templates.posts.master')
 @section('content')
    <div class="container-fluid">
         <!-- ============================================================== -->
@@ -6,14 +6,14 @@
         <!-- ============================================================== -->
         <div class="row page-titles">
             <div class="col-md-6 col-8 align-self-center">
-                <h3 class="text-themecolor m-b-0 m-t-0">Gallery</h3>
+                <h3 class="text-themecolor m-b-0 m-t-0">Image</h3>
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{url('/admin')}}">Home</a></li>
-                    <li class="breadcrumb-item active">Gallery</li>
+                <li class="breadcrumb-item"><a href="{{url('/user')}}">Home</a></li>
+                    <li class="breadcrumb-item active">Image</li>
                 </ol>
             </div>
             <div class="col-md-6 col-4 align-self-center">
-                <a href="{{url('/admin/gallery/add')}}" class="btn pull-right hidden-sm-down btn-success"> Add</a>
+                <a href="{{url('/user/image/'.$id.'/add')}}" class="btn pull-right hidden-sm-down btn-success"> Add</a>
             </div>
         </div>
 
@@ -49,8 +49,8 @@
                                 <thead>
                                     <tr>
                                         <th class="no-sort">#</th>
-                                        <th class="no-sort">Name</th>
-                                        <th class="no-sort">Category</th>
+                                        <th class="no-sort">Image</th>
+                                        <th class="no-sort">Create at</th>
                                         <th class="no-sort">Updated at</th>
                                         <th class="no-sort">Status</th>
                                         <th class="no-sort">Action</th>
@@ -60,11 +60,11 @@
                                     <?php $stt=1; foreach($items as $item){ ?>
                                     <tr>
                                         <td>{{$stt}}</td>
-                                        <td>{{$item->name}}</td>
-                                        <td>{{$item->category_name}}</td>
+                                        <td><img width='175px' src='{{url('storage')."/$item->link"}}' /></td>
+                                        <td>{{$item->created_at}}</td>
                                         <td>{{$item->updated_at}}</td>
                                         <td>
-                                            <form action='{{url("admin/gallery")."/".$item->id."/edit"}}' method="POST">
+                                            <form action='{{url("user/image")."/".$item->id."/edit"}}' method="POST">
                                                 {!! csrf_field() !!}
                                             @if($item->status==1)
                                                 <input value="0" name='status' type="hidden"/>
@@ -76,7 +76,6 @@
                                             </form>
                                         </td>
                                         <td>
-                                        <a href="{{url('admin/image')."/$item->id/list"}}" class="btn btn-warning">List image</a>
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal{{$item->id}}">Edit</button>
                                                 <!-- Modal -->
                                             <div id="editModal{{$item->id}}" class="modal fade" role="dialog">
@@ -89,26 +88,18 @@
                                                             <h4 class="modal-title">Edit {{$item->name}}</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                        <form class='form-horizontal form-material' enctype="multipart/form-data" action='{{url("admin/gallery")."/".$item->id."/edit"}}' method="POST">
+                                                        <form class='form-horizontal form-material' enctype="multipart/form-data" action='{{url("user/image")."/".$item->id."/edit"}}' method="POST">
                                                             {!! csrf_field() !!}
                                                             <div class="form-group">
-                                                                 <label >Name</label>
+                                                                 <label>Image</label>
                                                                 <div class="col-md-12">
-                                                                    <input type="text" name="name" required='true' value="{{$item->name}}" minlength="3" placeholder="Gallery name" class="form-control  ">
+                                                                    <input type="file" onchange="loadFile(event)"  name="link" placeholder="image" class="form-control  ">
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <img class="img-fluid" id='output' src='{{url('storage').'/'.$item->link}}'>
                                                                 </div>
                                                             </div>
-                                                            <div class="form-group">
-                                                                 <label >Category</label>
-                                                                <div class="col-md-12">
-                                                                    <select name="category_id"  class="form-control">
-                                                                        <?php
-                                                                            foreach($categories as $cate){
-                                                                        ?>
-                                                                            <option {{$cate->id==$item->category_id?'selected':''}}  value="{{$cate->id}}">{{$cate->name}}</option>
-                                                                        <?php }?>
-                                                                    </select>
-                                                                </div>
-                                                            </div>
+
                                                         </div>
                                                         <div class="modal-footer">
                                                             <button type="submit" id="save_{{$item->id}}" class="btn btn-success">Save</button>
@@ -128,13 +119,13 @@
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                            <h4 class="modal-title">Delete gallery</h4>
+                                                            <h4 class="modal-title">Delete image</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                            <h2>Do you want do this gallery?</h2>
+                                                            <h2>Do you want do this image?</h2>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form class='form-horizontal form-material' action='{{url("admin/gallery")."/".$item->id."/delete"}}' method="POST">
+                                                            <form class='form-horizontal form-material' action='{{url("user/image")."/".$item->id."/delete"}}' method="POST">
                                                                 {!! csrf_field() !!}
                                                                 <button type="submit" id="delete_{{$item->id}}" class="btn btn-success">Yes</button>
                                                             </form>

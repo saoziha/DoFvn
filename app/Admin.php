@@ -11,4 +11,13 @@ class Admin  extends Authenticatable
     protected $primaryKey='id';
     protected $fillable=['name','email','avatar','email_verified_at','password','status'];
     protected $hidden=['password'];
+
+    public static function getItemById($id){
+        return Self::where('id',$id)->first();
+    }
+
+    public static function edit($input,$id){
+        unset($input['_token']);
+        return Self::where('id',$id)->update($input);
+    }
 }

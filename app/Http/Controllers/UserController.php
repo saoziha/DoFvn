@@ -7,6 +7,9 @@ use Validator;
 use Auth;
 use App\Comment;
 use App\Posts;
+use App\User;
+use App\Services\Upload\UploadService;
+
 class UserController extends Controller
 {
     public function login(){
@@ -75,6 +78,89 @@ class UserController extends Controller
             return $rs;
         }else{
             return false;
+        }
+    }
+
+    public function profile(){
+        $user_id = Auth::guard('user')->user()->id;
+        $item = User::getItemById($user_id);
+        return view('user.profile',compact('item'));
+    }
+
+    public function changeProfile(Request $request){
+        $validator = Validator::make([
+            'name'=>$request->name
+        ],[
+            'name'=>'required|min:10'
+        ]);
+        if($validator->fails()){
+            return redirect('user/profile')
+            ->withErrors($validator)
+            ->withInput();
+        }else{
+            $user_id = Auth::guard('user')->user()->id;
+            if($request->hasFile('avatar')){
+                $filename='';
+                $filename = UploadService::upload('user',$request->avatar);
+                $userinfo = User::getItemById($user_id);
+                if($userinfo->avatar!='user.png'){
+                    UploadService::deleteFile($userinfo->avatar);
+                }
+                $input = [
+                    'name'=>$request->name,
+                    'avatar'=>$filename
+                ];
+            }else{
+                $input = [
+                    'name'=>$request->name
+                ];
+            }
+            if($request->password != ''){
+                $input['password']=bcrypt($request->password);
+            }
+            if(User::edit($input,$user_id)){
+                $request->session()->flash('msg','completed to edit');
+                return redirect('user/profile');
+            }else{
+                $request->session()->flash('msg','fail to edit');
+                return redirect('user/profile');
+            }
+        }
+    }
+
+    public function register(){
+        return view('user.register');
+    }
+
+    public function doRegister(Request $request){
+        $validator = Validator::make($request->all(),[
+            'name'=>'required|min:10',
+            'email'=>'required|email',
+            'password'=>'required|min:8'
+            ]);
+        if($validator->fails()){
+            return redirect('user/register')
+                    ->withErrors($validator)
+                    ->withInput();
+        }else{
+            $filename='user.png';
+            if($request->hasFile('avatar')){
+                $filename = UploadService::upload('user',$request->avatar);
+            }
+            $input = [
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'password'=>bcrypt($request->password),
+                'status'=>1,
+                'avatar'=>$filename
+            ];
+            if(User::add($input)){
+                $request->session()->flash('msg','Completed to register');
+                return redirect('user/login');
+            }else{
+                $request->session()->flash('msg','Fail');
+                return redirect('user/login');
+            }
         }
     }
 }

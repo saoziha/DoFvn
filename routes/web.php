@@ -25,6 +25,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::group(['middleware' => 'auth:admin'], function () {
     Route::group(['prefix' => 'admin','namespace'=>'Admin'], function () {
         Route::get('/','PostsController@index')->name('admin.index');
+        Route::get('profile','AdminController@profile');
+        Route::post('changeProfile','AdminController@changeProfile');
         //POST
         Route::group(['prefix' => 'posts'], function () {
             Route::get('/','PostsController@index')->name('admin.post.index');
@@ -107,6 +109,8 @@ Route::any('/ckfinder/examples/{example?}', 'CKSource\CKFinderBridge\Controller\
 //USER
 Route::get("user/login",'UserController@login');
 Route::post("user/doLogin",'UserController@doLogin');
+Route::get('user/register','UserController@register');
+Route::post('user/doRegister','UserController@doRegister');
 Route::group(['middleware' => 'auth:user'], function () {
     Route::group(['prefix' => 'user'], function () {
         Route::get('comment','UserController@comment');
@@ -116,6 +120,9 @@ Route::get('contact','ContactController@index')->name('contact.index');
 Route::post('contact/send','ContactController@send');
 Route::group(['middleware' => 'auth:user'], function () {
     Route::group(['prefix' => 'user'], function () {
+        Route::get('/','PostsController@list')->name('user.post.index');
+        Route::get('profile','UserController@profile');
+        Route::post('changeProfile','UserController@changeProfile');
         //POST
         Route::group(['prefix' => 'posts'], function () {
             Route::get('/','PostsController@list')->name('user.post.index');
@@ -128,6 +135,24 @@ Route::group(['middleware' => 'auth:user'], function () {
         });
         Route::get('{id}/logout','UserController@logout');
         Route::get('remove-comment','UserController@removeComment');
+
+        //GALLERY
+        Route::group(['prefix' => 'gallery'], function () {
+            Route::get('/','GalleryController@list')->name('user.gallery.index');
+            Route::get('add','GalleryController@getAdd')->name('user.gallery.index');
+            Route::post('doAdd','GalleryController@doAdd');
+            Route::post('{id}/edit','GalleryController@edit')->name('user.gallery.index');
+            Route::post('{id}/delete','GalleryController@delete')->name('user.gallery.index');
+        });
+        //IMAGE
+        Route::group(['prefix' => 'image'], function () {
+            Route::get('{id}/list','ImageController@index')->name('user.gallery.index');
+            Route::get('{id}/add','ImageController@getAdd')->name('user.gallery.index');
+            Route::post('{id}/doAdd','ImageController@doAdd');
+            Route::post('{id}/edit','ImageController@edit')->name('user.gallery.index');
+            Route::post('{id}/delete','ImageController@delete')->name('user.gallery.index');
+        });
     });
+
 });
 

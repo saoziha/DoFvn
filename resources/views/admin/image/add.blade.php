@@ -9,9 +9,6 @@
                     <li class="breadcrumb-item active">Image</li>
                 </ol>
             </div>
-            <div class="col-md-6 col-4 align-self-center">
-                <a href="https://wrappixel.com/templates/monsteradmin/" class="btn pull-right hidden-sm-down btn-success"> Add</a>
-            </div>
         </div>
 
         <div class="row">
@@ -45,7 +42,7 @@
                                 <div class="form-group">
                                     <div class="col-sm-12">
                                         <button type="submit" class="btn btn-success">Add</button>
-                                        <a  href="{{url('admin/image')}}" class="btn btn-secondary">Back</a>
+                                        <a  href="{{url('admin/gallery')}}" class="btn btn-secondary">Back</a>
                                     </div>
                                 </div>
                             </form>

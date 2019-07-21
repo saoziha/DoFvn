@@ -78,7 +78,7 @@
                     <!-- ============================================================== -->
                     <ul class="navbar-nav my-lg-0">
                         <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><img src="{{asset('templates/admin/assets/images/users/1.jpg')}}" alt="user" class="profile-pic m-r-5" />{{Auth::guard('admin')->user()->name}}</a>
+                        <a class="nav-link dropdown-toggle text-muted waves-effect waves-dark" href="/admin/profile" ><img src="/storage/{{Auth::guard('admin')->user()->avatar}}" alt="user" class="profile-pic m-r-5" />{{Auth::guard('admin')->user()->name}}</a>
                         </li>
                     </ul>
                 </div>

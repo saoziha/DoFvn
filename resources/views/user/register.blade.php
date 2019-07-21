@@ -33,9 +33,9 @@
     <div class="container-login100" style="background-image: url('{{asset('templates/admin')}}/login/images/bg-01.jpg');">
 			<div class="wrap-login100 p-t-30 p-b-50">
 				<span class="login100-form-title p-b-41">
-					User Login
+					User Regist
 				</span>
-                <form class="login100-form validate-form p-b-33 p-t-5" action="{{url('user/doLogin')}}" method='POST'>
+                <form class="login100-form validate-form p-b-33 p-t-5" enctype="multipart/form-data" action="{{url('user/doRegister')}}" method='POST'>
                     {!! csrf_field() !!}
                     @if ($errors->any())
                         <div class="alert alert-danger">
@@ -46,25 +46,31 @@
                             </ul>
                         </div>
                     @endif
+                    <div class="wrap-input100 validate-input" data-validate = "Enter email">
+						<input class="input100" type="text" required='true' min='5' name="name" placeholder="Your name">
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
+					</div>
 					<div class="wrap-input100 validate-input" data-validate = "Enter email">
-						<input class="input100" type="email" required='true' min='5' name="email" placeholder="Email">
+						<input class="input100" type="email" required='true' min='5'  pattern="/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/" name="email" placeholder="Your Email">
 						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
 
 					<div class="wrap-input100 validate-input" data-validate="Enter password">
-						<input class="input100" type="password" name="password" required='true' min='8' name="pass" placeholder="Password">
+						<input class="input100" type="password" name="password" required='true' min='8' name="pass" placeholder="Your Password">
 						<span class="focus-input100" data-placeholder="&#xe80f;"></span>
+                    </div>
+                    <div class="wrap-input100 validate-input" data-validate = "Enter email">
+						<input class="input100" type="file"  name="avatar" >
+						<span class="focus-input100" data-placeholder="&#xe82a;"></span>
 					</div>
 
 					<div class="container-login100-form-btn m-t-32">
 						<button type="submit" class="login100-form-btn">
-							Login
+							Register
                         </button>
+                        <a href="/" class="login100-form-btn">Cancel </a>
+					</div>
 
-					</div>
-                    <div class="container-login100-form-btn m-t-32">
-                        <label>You can register this <a href="/user/register">here </a></label>
-					</div>
 				</form>
 			</div>
 		</div>

@@ -8,12 +8,16 @@ use DB;
 class Gallery extends Model
 {
     protected $table=  'gallery';
-    protected $fillable=['name','status','category_id'];
+    protected $fillable=['name','status','user_id','category_id'];
 
 
     public static function getAll(){
         $gallery = Gallery::join('category','gallery.category_id','=','category.id');
         return $gallery->select(DB::raw('gallery.* ,category.name as category_name'))->orderBy('id','desc')->orderBy('name')->get();
+    }
+
+    public static function getAllByUser($id){
+        return Self::where('user_id',$id)->orderBy('status','desc')->orderBy('name')->get();
     }
 
     public static function getAllToPost(){

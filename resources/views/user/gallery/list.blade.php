@@ -1,4 +1,4 @@
-@extends('templates.admin.master')
+@extends('templates.posts.master')
 @section('content')
    <div class="container-fluid">
         <!-- ============================================================== -->
@@ -8,12 +8,12 @@
             <div class="col-md-6 col-8 align-self-center">
                 <h3 class="text-themecolor m-b-0 m-t-0">Gallery</h3>
                 <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="{{url('/admin')}}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{url('/user')}}">Home</a></li>
                     <li class="breadcrumb-item active">Gallery</li>
                 </ol>
             </div>
             <div class="col-md-6 col-4 align-self-center">
-                <a href="{{url('/admin/gallery/add')}}" class="btn pull-right hidden-sm-down btn-success"> Add</a>
+                <a href="{{url('/user/gallery/add')}}" class="btn pull-right hidden-sm-down btn-success"> Add</a>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
                                         <td>{{$item->category_name}}</td>
                                         <td>{{$item->updated_at}}</td>
                                         <td>
-                                            <form action='{{url("admin/gallery")."/".$item->id."/edit"}}' method="POST">
+                                            <form action='{{url("user/gallery")."/".$item->id."/edit"}}' method="POST">
                                                 {!! csrf_field() !!}
                                             @if($item->status==1)
                                                 <input value="0" name='status' type="hidden"/>
@@ -76,7 +76,7 @@
                                             </form>
                                         </td>
                                         <td>
-                                        <a href="{{url('admin/image')."/$item->id/list"}}" class="btn btn-warning">List image</a>
+                                        <a href="{{url('user/image')."/$item->id/list"}}" class="btn btn-warning">List image</a>
                                         <button type="button" class="btn btn-info" data-toggle="modal" data-target="#editModal{{$item->id}}">Edit</button>
                                                 <!-- Modal -->
                                             <div id="editModal{{$item->id}}" class="modal fade" role="dialog">
@@ -89,7 +89,7 @@
                                                             <h4 class="modal-title">Edit {{$item->name}}</h4>
                                                         </div>
                                                         <div class="modal-body">
-                                                        <form class='form-horizontal form-material' enctype="multipart/form-data" action='{{url("admin/gallery")."/".$item->id."/edit"}}' method="POST">
+                                                        <form class='form-horizontal form-material' enctype="multipart/form-data" action='{{url("user/gallery")."/".$item->id."/edit"}}' method="POST">
                                                             {!! csrf_field() !!}
                                                             <div class="form-group">
                                                                  <label >Name</label>
@@ -104,7 +104,7 @@
                                                                         <?php
                                                                             foreach($categories as $cate){
                                                                         ?>
-                                                                            <option {{$cate->id==$item->category_id?'selected':''}}  value="{{$cate->id}}">{{$cate->name}}</option>
+                                                                            <option {{$cate->id==$item->category_id?'selected':''}} value="{{$cate->id}}">{{$cate->name}}</option>
                                                                         <?php }?>
                                                                     </select>
                                                                 </div>
@@ -134,7 +134,7 @@
                                                             <h2>Do you want do this gallery?</h2>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <form class='form-horizontal form-material' action='{{url("admin/gallery")."/".$item->id."/delete"}}' method="POST">
+                                                            <form class='form-horizontal form-material' action='{{url("user/gallery")."/".$item->id."/delete"}}' method="POST">
                                                                 {!! csrf_field() !!}
                                                                 <button type="submit" id="delete_{{$item->id}}" class="btn btn-success">Yes</button>
                                                             </form>

@@ -32,8 +32,8 @@
                     <a href="{{url('/admin/tag')}}" class="waves-effect"><i class="fa fa-tags m-r-10" aria-hidden="true"></i>Tags</a>
                 </li>
                 <li class="<?= Route::current()->getName() == 'admin.archives.index'?'active':''?>">
-                        <a href="{{url('/admin/archives')}}" class="waves-effect"><i class="fa fa-adn m-r-10" aria-hidden="true"></i>Archives</a>
-                    </li>
+                    <a href="{{url('/admin/archives')}}" class="waves-effect"><i class="fa fa-adn m-r-10" aria-hidden="true"></i>Archives</a>
+                </li>
             </ul>
             <div class="text-center m-t-30">
                 <a href="{{url('admin/').'/'.Auth::guard('admin')->user()->id.'/logout'}}" class="btn btn-danger">Logout</a>
